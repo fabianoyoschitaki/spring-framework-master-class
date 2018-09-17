@@ -1,0 +1,7 @@
+What are the beans?
+What are the dependencies of a bean?
+Where to search for beans? => No need as SpringBootApplication scans package and subs
+
+@Component (beans)
+@Autowired (dependency)
+@Primary (disambiguous component)

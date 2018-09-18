@@ -5,3 +5,9 @@ Where to search for beans? => No need as SpringBootApplication scans package and
 @Component (beans)
 @Autowired (dependency)
 @Primary (disambiguous component)
+
+Older versions of Spring:
+Setter Injection -> if dependency is optional
+Constructor Injection -> if dependency is mandatory
+
+You don't need a setter with the @Autowired, the value is set by reflection.

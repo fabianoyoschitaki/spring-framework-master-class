@@ -22,4 +22,9 @@ You don't need a setter with the @Autowired, the value is set by reflection.
 	Spring - 1 instance per application context. If there are 5 application contexts in the same JVM, 5 different instances.
 	
 25 - Using Component Scan to scan for beans
+	if you application is com.test, every sub package will be scanned for components.
+	But if you have components say in com.abc, you have to add in the spring application:
+	@ComponentScan("com.abc")
+	
+26 - Lifecycle of a Bean @PostConstruct and @PreDestroy
 	

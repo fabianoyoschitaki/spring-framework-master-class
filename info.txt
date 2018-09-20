@@ -11,6 +11,28 @@ Setter Injection -> if dependency is optional
 Constructor Injection -> if dependency is mandatory
 
 You don't need a setter with the @Autowired, the value is set by reflection.
+You can also autowire by name
+
+@Autowired
+@Primary
+private SortAlgorithm sortAlgorithm;
+
+@Autowired
+private SortAlgorithm bubleSortAlgorithm;
+
+@Primary has priority over the bean name.
+
+13 - Autowiring in depth - @Qualifier annotation
+	Another way is put
+	@Qualifier both in the dependency class and the class which has the dependency. @Qualifier has priority over @Primary!
+	use @Primary if you have a more efficient algorithm among all. In case you have to switch to the other one, you can use autowiring by name or @Qualifier.
+
+14 - Scope of a bean - Prototype and Singleton
+	Bean Scope (default singleton)
+	- singleton: One instance per Spring Context
+	- prototype: New bean whenever requested
+	- request: One bean per HTTP request
+	- session: One bean per HTTP session
 
 23 - Complex Scope Scenarios of a Spring Bean - Mix Prototype and Singleton
 	if PersonDAO is singleton and has JdbcConnection is prototype as dependency, the same jdbcConnection object will be returned. 

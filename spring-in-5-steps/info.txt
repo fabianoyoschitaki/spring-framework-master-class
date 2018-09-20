@@ -32,4 +32,28 @@ You don't need a setter with the @Autowired, the value is set by reflection.
 	One of the first things that the IOC container does is autowire the dependencies. Then, call 
 	@PostConstruct method after that. The @PreDestroy is similar, but it happens when the instance
 	is in the process of being removed by the container. 
+
+27 - Container and Dependency Injection (CDI)
+	Java EE Dependency Injection Standard (JSR 330)
+	Spring supports most annotations:
+		@Inject (@Autowired)
+		@Named (@Component & @Qualifier)
+		@Singleton (defined a scope of Singleton)
+	Similar to JPA and Hibernate, interface and implementation, CDI defines how to do dependency injection. 
+	In order to use CDI, add to pom.xml, below spring-boot-starter:
+	<dependency>
+		<groupId>javax.inject</groupId>
+		<artifactId>javax.inject</artifactId>
+		<version>1</version>
+	</dependency>
 	
+	When use CDI annotations or Spring annotations? CDI is a Java EE standard. You'd always stick to a standard, 
+	like JPA instead of Hibernate. There's actually no good reasons why use one over each other... :P 
+	Btw CDI offers really good flexibility tomorrow if you want to switch away from Spring as Dependency Injection Framework.
+	
+28 - Ignore SLF4J Errors in Step 19 - We will fix them in Step 20 
+	As we start removing Spring Boot and bringing in Spring core in the next step, you would see
+	
+	A few SLF4J errors.
+	Logging does not work
+	Do not worry about them. We will fix them in Step 20.

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)// creates new bean every time
 public class BinarySearchImpl {
 	
-	static Logger LOGGER = LoggerFactory.getLogger(BinarySearchImpl.class);
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	private SortAlgorithm sortAlgorithm;
@@ -33,16 +33,16 @@ public class BinarySearchImpl {
 	public int binarySearch(int [] numbers, int numberToSearchFor) {
 		int sortedNumbers[] = sortAlgorithm.sort(numbers);
 		System.out.println(sortAlgorithm);
-		return 3;
+		return sortedNumbers[0];
 	}
 	
 	@PostConstruct
 	public void postConstruct() {
-		LOGGER.info("postConstruct is called.");
+		logger.info("postConstruct is called.");
 	}
 	
 	@PreDestroy
-	public void preDestroyMethod() {
-		LOGGER.info("preDestroyMethod is called.");
+	public void preDestroy() {
+		logger.info("preDestroy is called.");
 	}
 }

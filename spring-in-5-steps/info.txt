@@ -11,3 +11,15 @@ Setter Injection -> if dependency is optional
 Constructor Injection -> if dependency is mandatory
 
 You don't need a setter with the @Autowired, the value is set by reflection.
+
+23 - Complex Scope Scenarios of a Spring Bean - Mix Prototype and Singleton
+	if PersonDAO is singleton and has JdbcConnection is prototype as dependency, the same jdbcConnection object will be returned. 
+	So you have to create a proxy
+	@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode=ScopedProxyMode.TARGET_CLASS)
+
+24 - Difference between Spring Singleton and GOF Singleton
+	GOF - 1 instance per JVM, even if multiple applications are running in the same JVM, the same instance would be returned. 
+	Spring - 1 instance per application context. If there are 5 application contexts in the same JVM, 5 different instances.
+	
+25 - Using Component Scan to scan for beans
+	

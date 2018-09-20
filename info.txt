@@ -57,3 +57,7 @@ You don't need a setter with the @Autowired, the value is set by reflection.
 	A few SLF4J errors.
 	Logging does not work
 	Do not worry about them. We will fix them in Step 20.
+	
+29 - Removing Spring Boot in Basic Application
+	How to use Spring without Spring Boot? Let's remove spring boot starter.  
+	

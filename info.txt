@@ -60,4 +60,43 @@ You don't need a setter with the @Autowired, the value is set by reflection.
 	
 29 - Removing Spring Boot in Basic Application
 	How to use Spring without Spring Boot? Let's remove spring boot starter.  
+	Change in pom.xml:
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter</artifactId>
+	</dependency>
+	to
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-core</artifactId>
+	</dependency>
+
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+	</dependency>
+	if you run SpringIn5StepsBasicApplication, you'll get an error because spring boot is not available when running.
+	The reason why there are no compile errors is because:
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope>
+	</dependency>
+	which we will remove later.
+	
+	The first thing to get rid of this error is to initialize Application Context: 
+		Change @SpringBootApplication to @Configuration (org.springframework.context.annotation.Configuration)
+	
+	Also, SpringApplication is from spring boot. 
+		Change ApplicationContext applicationContext = SpringApplication.run(SpringIn5StepsBasicApplication.class, args);
+		to ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringIn5StepsBasicApplication.class);
+		
+	The other change is that we have to scan the package (which spring boot does by default)
+		@ComponentScan("") or declare the package explicitly.
+	
+	We will get Caused by: java.lang.ClassNotFoundException: org.slf4j.LoggerFactory, so we add in pom.xml:
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 	

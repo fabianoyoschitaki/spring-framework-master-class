@@ -26,5 +26,10 @@ You don't need a setter with the @Autowired, the value is set by reflection.
 	But if you have components say in com.abc, you have to add in the spring application:
 	@ComponentScan("com.abc")
 	
-26 - Lifecycle of a Bean @PostConstruct and @PreDestroy
+26 - Lifecycle of a Bean @PostConstruct and @PreDestroy (callback methods)
+	when put @Component, the lifecycle of a bean is going to be managed by the spring IOC container.
+	if you want to do certain things before being destroyed or after it was created;
+	One of the first things that the IOC container does is autowire the dependencies. Then, call 
+	@PostConstruct method after that. The @PreDestroy is similar, but it happens when the instance
+	is in the process of being removed by the container. 
 	

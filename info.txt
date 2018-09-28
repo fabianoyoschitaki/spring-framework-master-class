@@ -121,4 +121,29 @@ private SortAlgorithm bubleSortAlgorithm;
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
+
+30 - Fixing minor stuff - Add Logback and Close Application Context
+	We have to close the application context:
+		from ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringIn5StepsBasicApplication.class);
+		to ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringIn5StepsBasicApplication.class);
+		
+		applicationContext.close();
+		
+	Another way would be using Java 7 feature:
+		try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+				SpringIn5StepsBasicApplication.class)) {
+				
+	The log wasn't working properly. This is because we added the slf4j-api but not the implementation. Let's use logback which Spring uses by default:
+		SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+		SLF4J: Defaulting to no-operation (NOP) logger implementation
+		SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+	
+	The implementation:
+		<!-- SLF4J implementation -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+
+31 - Defining Spring Application Context Using XML
 	

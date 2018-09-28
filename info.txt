@@ -172,21 +172,30 @@ private SortAlgorithm bubleSortAlgorithm;
 		
 		- Create the beans
 			<bean id="xmlJdbcConnection" 
-				class="com.fabiano.spring.basics.springin5steps.xml.XMLJdbcConnection">
+				class="com.fabiano.spring.basics.springin5steps.xml.XmlJdbcConnection">
 			</bean>
 
 			<bean id="xmlPersonDAO" 
-				class="com.fabiano.spring.basics.springin5steps.xml.XMLPersonDAO">
+				class="com.fabiano.spring.basics.springin5steps.xml.XmlPersonDAO">
 			</bean>
 			
 		- Wire the beans 
 			<bean id="xmlPersonDAO" 
-				class="com.fabiano.spring.basics.springin5steps.xml.XMLPersonDAO">
+				class="com.fabiano.spring.basics.springin5steps.xml.XmlPersonDAO">
 				<property name="xmlJdbcConnection" ref="xmlJdbcConnection"/>
 			</bean>
 			
 32 - Defining Spring Application Context Using XML - Part 2
-	
+	Created SpringIn5StepsXMLContextApplication.java
+	Now, to load the beans using applicationContextXML:
+		try (ClassPathXmlApplicationContext applicationContext = 
+			new ClassPathXmlApplicationContext("applicationContext.xml")) {
+			XmlPersonDAO personDao = applicationContext.getBean(XmlPersonDAO.class);
+			System.out.println(personDao);
+			System.out.println(personDao.getXmlJdbcConnection());
+		}
+		
+	Before annotations, it was really difficult to wire beans using Spring. 
 	
 	
 	

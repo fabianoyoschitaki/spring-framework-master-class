@@ -24,7 +24,6 @@ public class SpringIn5StepsBasicApplication {
 			System.out.println(binarySearch.equals(binarySearch1));// same bean as default scope is singleton
 
 			System.out.println(binarySearch.binarySearch(new int[] { 1, 2, 3 }, 3));
-			applicationContext.close();
 		}
 	}
 }

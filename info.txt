@@ -145,5 +145,49 @@ private SortAlgorithm bubleSortAlgorithm;
 			<artifactId>logback-classic</artifactId>
 		</dependency>
 
-31 - Defining Spring Application Context Using XML
+31 - Defining Spring Application Context Using XML - Part 1
+	Duplicate com.fabiano.spring.basics.springin5steps.scope classes to com.fabiano.spring.basics.springin5steps.xml
+		- XMLJdbcConnection and XMLPersonDAO
+		- remove annotations @Component and @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
+	
+	Before Spring 2.5, all these things had to be wired manually through XML:
+		- Create new xml file applicationContext.xml in src/main/resources. Copy content from https://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/beans.html:
+			<?xml version="1.0" encoding="UTF-8"?>
+			<beans xmlns="http://www.springframework.org/schema/beans"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.springframework.org/schema/beans
+					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+			  <bean id="..." class="...">
+				<!-- collaborators and configuration for this bean go here -->
+			  </bean>
+
+			  <bean id="..." class="...">
+				<!-- collaborators and configuration for this bean go here -->
+			  </bean>
+
+			  <!-- more bean definitions go here -->
+
+			</beans>
+		
+		- Create the beans
+			<bean id="xmlJdbcConnection" 
+				class="com.fabiano.spring.basics.springin5steps.xml.XMLJdbcConnection">
+			</bean>
+
+			<bean id="xmlPersonDAO" 
+				class="com.fabiano.spring.basics.springin5steps.xml.XMLPersonDAO">
+			</bean>
+			
+		- Wire the beans 
+			<bean id="xmlPersonDAO" 
+				class="com.fabiano.spring.basics.springin5steps.xml.XMLPersonDAO">
+				<property name="xmlJdbcConnection" ref="xmlJdbcConnection"/>
+			</bean>
+			
+32 - Defining Spring Application Context Using XML - Part 2
+	
+	
+	
+	
 	

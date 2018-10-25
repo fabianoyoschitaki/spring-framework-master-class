@@ -1,6 +1,11 @@
 package com.fabiano.spring.basics.springin5steps.xml;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class XmlPersonDAO {
+	@Autowired
 	XmlJdbcConnection xmlJdbcConnection;
 
 	public XmlJdbcConnection getXmlJdbcConnection() {

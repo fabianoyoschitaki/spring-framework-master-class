@@ -197,6 +197,40 @@ private SortAlgorithm bubleSortAlgorithm;
 		
 	Before annotations, it was really difficult to wire beans using Spring. 
 	
+33 - Mixing XML Context with Component Scan for Beans defined with Annotations
+	In SpringIn5StepsXMLContextApplication.java, there is no need to use @Component and @Configuration, because it is based on XML. 
+	Let's check which beans are being loaded:
+		LOGGER.info("Beans Loaded -> {}", (Object)applicationContext.getBeanDefinitionNames());
+		Beans Loaded -> [xmlJdbcConnection, xmlPersonDAO]
+		
+	These 2 beans are the ones which we have defined in the applicationContext.xml.
+	What if we want to load other beans? (basic, cdi and scope packages)
+	A: Component Scan in applicationContext.xml:
 	
+		<beans xmlns="http://www.springframework.org/schema/beans"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:context="http://www.springframework.org/schema/context"
+			xsi:schemaLocation="http://www.springframework.org/schema/beans
+							   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+							   http://www.springframework.org/schema/context
+							   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+			<context:component-scan base-package="com.fabiano.spring.basics"></context:component-scan>
+		Beans Loaded -> [componentDAO, scopedTarget.componentJdbcConnection, componentJdbcConnection, 
+						 binarySearchImpl, bubbleSortAlgorithm, quickSortAlgorithm, someCdiBusiness, someCdiDao, 
+						 scopedTarget.jdbcConnection, jdbcConnection, personDAO, springIn5StepsBasicApplication, 
+						 springIn5StepsCdiApplication, springIn5StepsComponentScanApplication, springIn5StepsScopeApplication, 
+						 org.springframework.context.annotation.internalConfigurationAnnotationProcessor, 
+						 org.springframework.context.annotation.internalAutowiredAnnotationProcessor, 
+						 org.springframework.context.annotation.internalRequiredAnnotationProcessor, 
+						 org.springframework.context.annotation.internalCommonAnnotationProcessor, 
+						 org.springframework.context.event.internalEventListenerProcessor, 
+						 org.springframework.context.event.internalEventListenerFactory, 
+						 xmlJdbcConnection, xmlPersonDAO]
 	
+	So here we are using a combination of defining beans and component scan. To remove both beans in applicationContext.xml, 
+	add to XmlPersonDAO.java: @Component to class and @AutoWired to XmlJdbcConnection attribute
+	add to XmlJdbcConnection.java: @Component to class
+	
+34 - IOC Container vs Application Context vs Bean Factory
 	

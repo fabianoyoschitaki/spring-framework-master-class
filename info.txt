@@ -233,4 +233,37 @@ private SortAlgorithm bubleSortAlgorithm;
 	add to XmlJdbcConnection.java: @Component to class
 	
 34 - IOC Container vs Application Context vs Bean Factory
+	DISAMBIGUATION
+		- IOC Container: Let's say WelcomeController needs WelcomeService. WC directly creates an instance of WS 
+			@RestController
+			public class WelcomeController {
+				private WelcomeService service = new WelcomeService(); 
+			
+			But when using Spring, then we would do this:
+				@RestController
+				public class WelcomeController {
+					@AutoWired
+					private WelcomeService service; 
+					
+				@Component
+				public class WelcomeService
+			
+			Who does that? Spring Framework. It shifts the responsibility of creating the bean out to spring. 
+			The control moves out of the controller or the component which needs the dependency to the framework which is injecting the dependency in. 
+			The program that provides inversion of control is the IOC container. Manage, create, autowire beans. 
+			In Spring, there are two implementations of the IOC Container: Application Context and Bean Factory. In all scenarios we've been using
+			Application Context because Spring recommend to use it in 99% of the scenarios. 
+			
+			What is the difference between Application Context and Bean Factory? AC is nothing but Bean Factory ++
+			INCOMPLETO... 3:10
+			
+		
+		
+		- Application Context
+		- Bean Factory
+
+
+
+
+
 	

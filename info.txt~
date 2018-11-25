@@ -333,16 +333,51 @@ private SortAlgorithm bubleSortAlgorithm;
 SECTION 6 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
 ------------------------------------------------------------------------------
 37 - Section Introduction - JUnit in 5 Steps
+	@Before, @After, @BeforeClass etc...
+	Code in: https://github.com/in28minutes/spring-master-class/tree/master/00-framework-tool-introductions/03.JUnit-Introduction-In-5-Steps
 
 ------------------------------------------------------------------------------
 38 - Step 1: What is JUnit and Unit Testing
+	Unit Testing is testing a specific code or a class, for the methods of the class. JUnit is a framework that will help you call these methods and check whether the output is as expected. One advantage of using JUnit is that it is automated, running every hour or whenever any change happen, being notified. JUnits can be run in Continuous Integrations like Jenkins. 
+	Unit Testing falls under the suit of Automation Testing. The important thing about automation testing is that these can be run under continuous integration. 
 
 ------------------------------------------------------------------------------
 39 - Step 2: First JUnit Project and Green Bar
+	Create new Java Project junit-in-5-steps and class in package com.fabiano.junit;
+
+		public class MyMath {
+			int sum (int[] numbers) {
+				int sum = 0;
+				for (int n : numbers) {
+					sum+=n;
+				}
+				return sum;
+			}
+		}
+	How can we be sure that this method is working fine?
+	Let's create a source folder of tests (Unit tests should be in a different folder compared to Production code! The test code must not be deployed)
+		new source folder "test"
+	Then create new JUnit Test Case (New JUnit 4 test) MyMathTest. In JUnit, absence of failure is success, be careful.
 
 ------------------------------------------------------------------------------
 40 - Step 3: First Code and First Unit Test
-
+	Let's test the MyMath.sum in the JUnit test case we previously created. Create method:
+	
+	public class MyMathTest {
+	
+		MyMath myMath = new MyMath();
+	
+		@Test
+		public void sumWith3Numbers() {
+			//check that result is 6
+			assertEquals(6, myMath.sum(new int[] {1,2,3}));
+		}
+	
+		@Test
+		public void sumWith1Number() {
+			assertEquals(4, myMath.sum(new int[] {4}));
+		}
+	}
 ------------------------------------------------------------------------------
 41 - Step 4: Other assert methods
 

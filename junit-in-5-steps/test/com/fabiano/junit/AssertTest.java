@@ -2,6 +2,7 @@ package com.fabiano.junit;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class AssertTest {
@@ -16,5 +17,4 @@ public class AssertTest {
 		assertNull(null);
 		assertArrayEquals(new int[] {1,2,3}, new int[] {1,2,3});
 	}
-
 }

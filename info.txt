@@ -384,6 +384,10 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
 
 ------------------------------------------------------------------------------
 42 - Step 5: Important Annotations
+	@Before and @After.
+	The order of the tests is not guaranteed. But @Before will run before EVERY @Test. You can use it for example to connect to a database.
+	
+	@BeforeClass and @AfterClass
 
 
 

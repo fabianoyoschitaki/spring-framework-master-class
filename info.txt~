@@ -380,6 +380,7 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
 	}
 ------------------------------------------------------------------------------
 41 - Step 4: Other assert methods
+	Created AssertTest:
 
 ------------------------------------------------------------------------------
 42 - Step 5: Important Annotations

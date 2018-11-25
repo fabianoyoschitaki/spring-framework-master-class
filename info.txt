@@ -21,40 +21,40 @@ private SortAlgorithm sortAlgorithm;
 private SortAlgorithm bubleSortAlgorithm;
 
 @Primary has priority over the bean name.
-
+------------------------------------------------------------------------------
 13 - Autowiring in depth - @Qualifier annotation
 	Another way is put
 	@Qualifier both in the dependency class and the class which has the dependency. @Qualifier has priority over @Primary!
 	use @Primary if you have a more efficient algorithm among all. In case you have to switch to the other one, you can use autowiring by name or @Qualifier.
-
+------------------------------------------------------------------------------
 14 - Scope of a bean - Prototype and Singleton
 	Bean Scope (default singleton)
 	- singleton: One instance per Spring Context
 	- prototype: New bean whenever requested
 	- request: One bean per HTTP request
 	- session: One bean per HTTP session
-
+------------------------------------------------------------------------------
 23 - Complex Scope Scenarios of a Spring Bean - Mix Prototype and Singleton
 	if PersonDAO is singleton and has JdbcConnection is prototype as dependency, the same jdbcConnection object will be returned. 
 	So you have to create a proxy
 	@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode=ScopedProxyMode.TARGET_CLASS)
-
+------------------------------------------------------------------------------
 24 - Difference between Spring Singleton and GOF Singleton
 	GOF - 1 instance per JVM, even if multiple applications are running in the same JVM, the same instance would be returned. 
 	Spring - 1 instance per application context. If there are 5 application contexts in the same JVM, 5 different instances.
-	
+------------------------------------------------------------------------------	
 25 - Using Component Scan to scan for beans
 	if you application is com.test, every sub package will be scanned for components.
 	But if you have components say in com.abc, you have to add in the spring application:
 	@ComponentScan("com.abc")
-	
+------------------------------------------------------------------------------	
 26 - Lifecycle of a Bean @PostConstruct and @PreDestroy (callback methods)
 	when put @Component, the lifecycle of a bean is going to be managed by the spring IOC container.
 	if you want to do certain things before being destroyed or after it was created;
 	One of the first things that the IOC container does is autowire the dependencies. Then, call 
 	@PostConstruct method after that. The @PreDestroy is similar, but it happens when the instance
 	is in the process of being removed by the container. 
-
+------------------------------------------------------------------------------
 27 - Container and Dependency Injection (CDI)
 	Java EE Dependency Injection Standard (JSR 330)
 	Spring supports most annotations:
@@ -72,14 +72,14 @@ private SortAlgorithm bubleSortAlgorithm;
 	When use CDI annotations or Spring annotations? CDI is a Java EE standard. You'd always stick to a standard, 
 	like JPA instead of Hibernate. There's actually no good reasons why use one over each other... :P 
 	Btw CDI offers really good flexibility tomorrow if you want to switch away from Spring as Dependency Injection Framework.
-	
+------------------------------------------------------------------------------	
 28 - Ignore SLF4J Errors in Step 19 - We will fix them in Step 20 
 	As we start removing Spring Boot and bringing in Spring core in the next step, you would see
 	
 	A few SLF4J errors.
 	Logging does not work
 	Do not worry about them. We will fix them in Step 20.
-	
+------------------------------------------------------------------------------	
 29 - Removing Spring Boot in Basic Application
 	How to use Spring without Spring Boot? Let's remove spring boot starter.  
 	Change in pom.xml:
@@ -121,7 +121,7 @@ private SortAlgorithm bubleSortAlgorithm;
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
-
+------------------------------------------------------------------------------
 30 - Fixing minor stuff - Add Logback and Close Application Context
 	We have to close the application context:
 		from ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringIn5StepsBasicApplication.class);
@@ -144,7 +144,7 @@ private SortAlgorithm bubleSortAlgorithm;
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
-
+------------------------------------------------------------------------------
 31 - Defining Spring Application Context Using XML - Part 1
 	Duplicate com.fabiano.spring.basics.springin5steps.scope classes to com.fabiano.spring.basics.springin5steps.xml
 		- XMLJdbcConnection and XMLPersonDAO
@@ -184,7 +184,7 @@ private SortAlgorithm bubleSortAlgorithm;
 				class="com.fabiano.spring.basics.springin5steps.xml.XmlPersonDAO">
 				<property name="xmlJdbcConnection" ref="xmlJdbcConnection"/>
 			</bean>
-			
+------------------------------------------------------------------------------
 32 - Defining Spring Application Context Using XML - Part 2
 	Created SpringIn5StepsXMLContextApplication.java
 	Now, to load the beans using applicationContextXML:
@@ -196,7 +196,7 @@ private SortAlgorithm bubleSortAlgorithm;
 		}
 		
 	Before annotations, it was really difficult to wire beans using Spring. 
-	
+------------------------------------------------------------------------------
 33 - Mixing XML Context with Component Scan for Beans defined with Annotations
 	In SpringIn5StepsXMLContextApplication.java, there is no need to use @Component and @Configuration, because it is based on XML. 
 	Let's check which beans are being loaded:
@@ -231,9 +231,10 @@ private SortAlgorithm bubleSortAlgorithm;
 	So here we are using a combination of defining beans and component scan. To remove both beans in applicationContext.xml, 
 	add to XmlPersonDAO.java: @Component to class and @AutoWired to XmlJdbcConnection attribute
 	add to XmlJdbcConnection.java: @Component to class
+
 ------------------------------------------------------------------------------
 34 - IOC Container vs Application Context vs Bean Factory
-	DISAMBIGUATION
+	DISAMBIGUATION:
 		- IOC Container: Let's say WelcomeController needs WelcomeService. WC directly creates an instance of WS 
 			@RestController
 			public class WelcomeController {
@@ -252,18 +253,62 @@ private SortAlgorithm bubleSortAlgorithm;
 			The control moves out of the controller or the component which needs the dependency to the framework which is injecting the dependency in. 
 			The program that provides inversion of control is the IOC container. Manage, create, autowire beans. 
 			In Spring, there are two implementations of the IOC Container: Application Context and Bean Factory. In all scenarios we've been using
-			Application Context because Spring recommend to use it in 99% of the scenarios. 
+			Application Context because Spring recommend to use it in 99% of the scenarios, except when memory is a premmium (like an IOT device)
 			
 			What is the difference between Application Context and Bean Factory? AC is nothing but Bean Factory ++
 			INCOMPLETO... 3:10
-			
+				
 		
+		- Application Context (second one of the two implementations of the IOC container)
+			It is BeanFactory++: Spring's AOP features, internationalization, WebApplicationContext for web applications etc
+
+		- Bean Factory (first one of the two implementations of the IOC container)
+			It only provides the basic management for the beans and wiring of dependencies, nothing more.
+------------------------------------------------------------------------------
+35 - @Component vs @Service vs @Repository vs @Controller
+	These are the different stereotypes that are present in Spring.	Talking about web applications:
+
+		Web Layer/UI Layer - shows information to the user
+		Business Layer - responsible for the business logic 
+		Data Layer - responsible for getting the data from the database or an external interface		
+
+	@Component: Generic Component. If you're not sure if something belongs to one of those layers, then you can use @Component.
+	
+	The other 3 annotations are very specific:
+		@Repository: Encapsulating storage, retrieval, and search behavior typically from a relational database. (Data Layer)
+		@Service: Business Service Facade. (Business Layer)
+		@Controller: Controller in MVC Pattern. (Web Layer)
+	
+	So let's change PersonDAO and ComponentDAO to @Repsitory 
+	and BinarySearchImpl, BubbleSortAlgorithm, QuickSortAlgorithm and SortAlgorithm to @Service (Business!)
+
+	This does not change the functionality. So why should I use a specific annotation. In the AOP section, you'll see you can add
+	different functionalities by putting them in different categories and apply different logic for each of these categories. 
+	For example, Spring provides a default exception translation facility if you use Repository. There are lots of JDBC Exceptions, so if you put this @Repository, Spring translates them, if you put @Component you will not be able to use that feature. 
+	Also, let's suppose you want to log everything that is in your Business Layer. In that kind of scenario, you would have to identity everything that has an @Service annotation and use AOP and log everything. (We'll talk about that in the AOP section) 
+------------------------------------------------------------------------------
+36 - Read values from external properties file
 		
-		- Application Context
-		- Bean Factory
-
-
-
 
 
 	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

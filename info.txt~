@@ -288,11 +288,66 @@ private SortAlgorithm bubleSortAlgorithm;
 	Also, let's suppose you want to log everything that is in your Business Layer. In that kind of scenario, you would have to identity everything that has an @Service annotation and use AOP and log everything. (We'll talk about that in the AOP section) 
 ------------------------------------------------------------------------------
 36 - Read values from external properties file
-		
-
-
+	Typically applications have a lot of configuration. For example, in the data layer, you might be talking to a database. So this configuration might be different in different environments. Also, the external services that you talk to might be different in different environments. 
+	So these kind of values are good to be externalized into property file. 
 	
+	1. Let's create com.fabiano.spring.basics.springin5steps.properties class SomeExternalService:
+		
+		@Component
+		public class SomeExternalService {
+	
+			//from property file
+			private String url;
+	
+			public String returnServiceURL() {
+				return this.url;
+			}
+		}
 
+	2. at src/main/resources, create app.properties file: 
+		
+		external.service.url=http://someserver.dev.com/service
+
+	3. Go back to SomeExternalService and put: 
+		
+		@Value("${external.service.url}")
+		private String url;
+
+	4. To load the app.properties, create a new class SpringIn5StepsPropertiesApplication (@PropertySource("classpath:app.properties")):
+		@Configuration
+		@ComponentScan
+		//load app.properties
+		@PropertySource("classpath:app.properties")
+		public class SpringIn5StepsPropertiesApplication {
+
+			public static void main(String[] args) {
+				try (AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+						SpringIn5StepsPropertiesApplication.class)) {
+
+					SomeExternalService service = applicationContext.getBean(SomeExternalService.class);
+					System.out.println(service);
+				}
+			}
+		}
+------------------------------------------------------------------------------
+SECTION 6 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
+------------------------------------------------------------------------------
+37 - Section Introduction - JUnit in 5 Steps
+
+------------------------------------------------------------------------------
+38 - Step 1: What is JUnit and Unit Testing
+
+------------------------------------------------------------------------------
+39 - Step 2: First JUnit Project and Green Bar
+
+------------------------------------------------------------------------------
+40 - Step 3: First Code and First Unit Test
+
+------------------------------------------------------------------------------
+41 - Step 4: Other assert methods
+
+------------------------------------------------------------------------------
+42 - Step 5: Important Annotations
 
 
 

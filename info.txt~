@@ -388,6 +388,7 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
 	The order of the tests is not guaranteed. But @Before will run before EVERY @Test. You can use it for example to connect to a database.
 	
 	@BeforeClass and @AfterClass
+		Before and After the class is loaded. Methods must be static.
 
 
 

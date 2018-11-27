@@ -22,40 +22,40 @@ private SortAlgorithm bubleSortAlgorithm;
 
 @Primary has priority over the bean name.
 ------------------------------------------------------------------------------
-13 - Autowiring in depth - @Qualifier annotation
+20 - Autowiring in depth - @Qualifier annotation
 	Another way is put
 	@Qualifier both in the dependency class and the class which has the dependency. @Qualifier has priority over @Primary!
 	use @Primary if you have a more efficient algorithm among all. In case you have to switch to the other one, you can use autowiring by name or @Qualifier.
 ------------------------------------------------------------------------------
-14 - Scope of a bean - Prototype and Singleton
+21 - Scope of a bean - Prototype and Singleton
 	Bean Scope (default singleton)
 	- singleton: One instance per Spring Context
 	- prototype: New bean whenever requested
 	- request: One bean per HTTP request
 	- session: One bean per HTTP session
 ------------------------------------------------------------------------------
-23 - Complex Scope Scenarios of a Spring Bean - Mix Prototype and Singleton
+22 - Complex Scope Scenarios of a Spring Bean - Mix Prototype and Singleton
 	if PersonDAO is singleton and has JdbcConnection is prototype as dependency, the same jdbcConnection object will be returned. 
 	So you have to create a proxy
 	@Scope(value=ConfigurableBeanFactory.SCOPE_PROTOTYPE, proxyMode=ScopedProxyMode.TARGET_CLASS)
 ------------------------------------------------------------------------------
-24 - Difference between Spring Singleton and GOF Singleton
+23 - Difference between Spring Singleton and GOF Singleton
 	GOF - 1 instance per JVM, even if multiple applications are running in the same JVM, the same instance would be returned. 
 	Spring - 1 instance per application context. If there are 5 application contexts in the same JVM, 5 different instances.
 ------------------------------------------------------------------------------	
-25 - Using Component Scan to scan for beans
+24 - Using Component Scan to scan for beans
 	if you application is com.test, every sub package will be scanned for components.
 	But if you have components say in com.abc, you have to add in the spring application:
 	@ComponentScan("com.abc")
 ------------------------------------------------------------------------------	
-26 - Lifecycle of a Bean @PostConstruct and @PreDestroy (callback methods)
+25 - Lifecycle of a Bean @PostConstruct and @PreDestroy (callback methods)
 	when put @Component, the lifecycle of a bean is going to be managed by the spring IOC container.
 	if you want to do certain things before being destroyed or after it was created;
 	One of the first things that the IOC container does is autowire the dependencies. Then, call 
 	@PostConstruct method after that. The @PreDestroy is similar, but it happens when the instance
 	is in the process of being removed by the container. 
 ------------------------------------------------------------------------------
-27 - Container and Dependency Injection (CDI)
+26 - Container and Dependency Injection (CDI)
 	Java EE Dependency Injection Standard (JSR 330)
 	Spring supports most annotations:
 		@Inject (@Autowired)
@@ -73,14 +73,14 @@ private SortAlgorithm bubleSortAlgorithm;
 	like JPA instead of Hibernate. There's actually no good reasons why use one over each other... :P 
 	Btw CDI offers really good flexibility tomorrow if you want to switch away from Spring as Dependency Injection Framework.
 ------------------------------------------------------------------------------	
-28 - Ignore SLF4J Errors in Step 19 - We will fix them in Step 20 
+27 - Ignore SLF4J Errors in Step 19 - We will fix them in Step 20 
 	As we start removing Spring Boot and bringing in Spring core in the next step, you would see
 	
 	A few SLF4J errors.
 	Logging does not work
 	Do not worry about them. We will fix them in Step 20.
 ------------------------------------------------------------------------------	
-29 - Removing Spring Boot in Basic Application
+28 - Removing Spring Boot in Basic Application
 	How to use Spring without Spring Boot? Let's remove spring boot starter.  
 	Change in pom.xml:
 	<dependency>
@@ -122,7 +122,7 @@ private SortAlgorithm bubleSortAlgorithm;
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 ------------------------------------------------------------------------------
-30 - Fixing minor stuff - Add Logback and Close Application Context
+29 - Fixing minor stuff - Add Logback and Close Application Context
 	We have to close the application context:
 		from ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringIn5StepsBasicApplication.class);
 		to ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringIn5StepsBasicApplication.class);
@@ -145,7 +145,7 @@ private SortAlgorithm bubleSortAlgorithm;
 			<artifactId>logback-classic</artifactId>
 		</dependency>
 ------------------------------------------------------------------------------
-31 - Defining Spring Application Context Using XML - Part 1
+30 - Defining Spring Application Context Using XML - Part 1
 	Duplicate com.fabiano.spring.basics.springin5steps.scope classes to com.fabiano.spring.basics.springin5steps.xml
 		- XMLJdbcConnection and XMLPersonDAO
 		- remove annotations @Component and @Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -185,7 +185,7 @@ private SortAlgorithm bubleSortAlgorithm;
 				<property name="xmlJdbcConnection" ref="xmlJdbcConnection"/>
 			</bean>
 ------------------------------------------------------------------------------
-32 - Defining Spring Application Context Using XML - Part 2
+31 - Defining Spring Application Context Using XML - Part 2
 	Created SpringIn5StepsXMLContextApplication.java
 	Now, to load the beans using applicationContextXML:
 		try (ClassPathXmlApplicationContext applicationContext = 
@@ -197,7 +197,7 @@ private SortAlgorithm bubleSortAlgorithm;
 		
 	Before annotations, it was really difficult to wire beans using Spring. 
 ------------------------------------------------------------------------------
-33 - Mixing XML Context with Component Scan for Beans defined with Annotations
+32 - Mixing XML Context with Component Scan for Beans defined with Annotations
 	In SpringIn5StepsXMLContextApplication.java, there is no need to use @Component and @Configuration, because it is based on XML. 
 	Let's check which beans are being loaded:
 		LOGGER.info("Beans Loaded -> {}", (Object)applicationContext.getBeanDefinitionNames());
@@ -233,7 +233,7 @@ private SortAlgorithm bubleSortAlgorithm;
 	add to XmlJdbcConnection.java: @Component to class
 
 ------------------------------------------------------------------------------
-34 - IOC Container vs Application Context vs Bean Factory
+33 - IOC Container vs Application Context vs Bean Factory
 	DISAMBIGUATION:
 		- IOC Container: Let's say WelcomeController needs WelcomeService. WC directly creates an instance of WS 
 			@RestController
@@ -265,7 +265,7 @@ private SortAlgorithm bubleSortAlgorithm;
 		- Bean Factory (first one of the two implementations of the IOC container)
 			It only provides the basic management for the beans and wiring of dependencies, nothing more.
 ------------------------------------------------------------------------------
-35 - @Component vs @Service vs @Repository vs @Controller
+34 - @Component vs @Service vs @Repository vs @Controller
 	These are the different stereotypes that are present in Spring.	Talking about web applications:
 
 		Web Layer/UI Layer - shows information to the user
@@ -287,7 +287,7 @@ private SortAlgorithm bubleSortAlgorithm;
 	For example, Spring provides a default exception translation facility if you use Repository. There are lots of JDBC Exceptions, so if you put this @Repository, Spring translates them, if you put @Component you will not be able to use that feature. 
 	Also, let's suppose you want to log everything that is in your Business Layer. In that kind of scenario, you would have to identity everything that has an @Service annotation and use AOP and log everything. (We'll talk about that in the AOP section) 
 ------------------------------------------------------------------------------
-36 - Read values from external properties file
+35 - Read values from external properties file
 	Typically applications have a lot of configuration. For example, in the data layer, you might be talking to a database. So this configuration might be different in different environments. Also, the external services that you talk to might be different in different environments. 
 	So these kind of values are good to be externalized into property file. 
 	
@@ -330,19 +330,19 @@ private SortAlgorithm bubleSortAlgorithm;
 			}
 		}
 ------------------------------------------------------------------------------
-SECTION 6 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
+SECTION 5 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
 ------------------------------------------------------------------------------
-37 - Section Introduction - JUnit in 5 Steps
+36 - Section Introduction - JUnit in 5 Steps
 	@Before, @After, @BeforeClass etc...
 	Code in: https://github.com/in28minutes/spring-master-class/tree/master/00-framework-tool-introductions/03.JUnit-Introduction-In-5-Steps
 
 ------------------------------------------------------------------------------
-38 - Step 1: What is JUnit and Unit Testing
+37 - Step 1: What is JUnit and Unit Testing
 	Unit Testing is testing a specific code or a class, for the methods of the class. JUnit is a framework that will help you call these methods and check whether the output is as expected. One advantage of using JUnit is that it is automated, running every hour or whenever any change happen, being notified. JUnits can be run in Continuous Integrations like Jenkins. 
 	Unit Testing falls under the suit of Automation Testing. The important thing about automation testing is that these can be run under continuous integration. 
 
 ------------------------------------------------------------------------------
-39 - Step 2: First JUnit Project and Green Bar
+38 - Step 2: First JUnit Project and Green Bar
 	Create new Java Project junit-in-5-steps and class in package com.fabiano.junit;
 
 		public class MyMath {
@@ -360,7 +360,7 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
 	Then create new JUnit Test Case (New JUnit 4 test) MyMathTest. In JUnit, absence of failure is success, be careful.
 
 ------------------------------------------------------------------------------
-40 - Step 3: First Code and First Unit Test
+39 - Step 3: First Code and First Unit Test
 	Let's test the MyMath.sum in the JUnit test case we previously created. Create method:
 	
 	public class MyMathTest {
@@ -379,16 +379,218 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - JUNIT IN 5 STEPS
 		}
 	}
 ------------------------------------------------------------------------------
-41 - Step 4: Other assert methods
+40 - Step 4: Other assert methods
 	Created AssertTest:
 
 ------------------------------------------------------------------------------
-42 - Step 5: Important Annotations
+41 - Step 5: Important Annotations
 	@Before and @After.
 	The order of the tests is not guaranteed. But @Before will run before EVERY @Test. You can use it for example to connect to a database.
 	
 	@BeforeClass and @AfterClass
 		Before and After the class is loaded. Methods must be static.
+
+
+------------------------------------------------------------------------------
+SECTION 6 - BASIC TOOLS AND FRAMEWORKS - MOCKITO IN 5 STEPS
+------------------------------------------------------------------------------
+42 - Section Introduction - Mockito in 5 Steps
+
+------------------------------------------------------------------------------
+43 - Step 1: Setting an example using http://start.spring.io
+
+------------------------------------------------------------------------------
+44 - Step 2: Using a Stubs - Disadvantages
+
+------------------------------------------------------------------------------
+45 - Step 3: Your first mock with Mockito
+
+------------------------------------------------------------------------------
+46 - Step 4: Using Mockito Annotations - @Mock, @InjectMocks, @RunWith
+
+------------------------------------------------------------------------------
+42 - Step 5: Mocking List Interface
+
+------------------------------------------------------------------------------
+SECTION 7 - SPRING LEVEL 3 - UNIT TESTING WITH SPRING FRAMEWORK
+------------------------------------------------------------------------------
+48 - Section Introduction - Unit testing with Spring Framework
+
+------------------------------------------------------------------------------
+49 - Step 27: Spring Unit Testing with a Java Context
+
+------------------------------------------------------------------------------
+50 - Spring Unit Testing with an XML Context
+
+------------------------------------------------------------------------------
+51 - Spring Unit Testing with Mockito
+
+------------------------------------------------------------------------------
+SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
+------------------------------------------------------------------------------
+52 - Introduction Section - Spring Boot in 10 Steps
+
+------------------------------------------------------------------------------
+53 - Step 1: Introduction to Spring Boot - Goals and Important Features
+
+------------------------------------------------------------------------------
+54 - Step 2: Developing Spring Applications before Spring Boot
+
+------------------------------------------------------------------------------
+55 - Step 3: Using Spring Initializr to create a Spring Boot Application
+
+------------------------------------------------------------------------------
+56 - Step 4: Creating a Simple REST Controller
+
+------------------------------------------------------------------------------
+57 - Step 5: What is Spring Boot Auto Configuration?
+
+------------------------------------------------------------------------------
+58 - Step 6: Spring Boot vs Spring vs Spring MVC
+
+------------------------------------------------------------------------------
+59 - Step 7: Spring Boot Starter Projects - Starter Web and Starter JPA
+
+------------------------------------------------------------------------------
+60 - Step 8: Overview of different Spring Boot Starter Projects
+
+------------------------------------------------------------------------------
+61 - Step 9: Spring Boot Actuator
+
+------------------------------------------------------------------------------
+62 - Step 9: Spring Boot Developer Tools
+
+
+------------------------------------------------------------------------------
+SECTION 9 - SPRING LEVEL 5 - SPRING AOP
+------------------------------------------------------------------------------
+63 - Section Introduction - Spring AOP
+
+------------------------------------------------------------------------------
+64 - Spring JDBC to JPA with Hibernate - Github Folder
+
+------------------------------------------------------------------------------
+65 - Spring AOP Github Folder
+
+------------------------------------------------------------------------------
+66 - Step 01 - Setting up AOP Example - Part 1
+
+------------------------------------------------------------------------------
+67 - Step 02 - Setting up AOP Example - Part 2
+
+------------------------------------------------------------------------------
+68 - Step 03 - Defining an @Before advice
+
+------------------------------------------------------------------------------
+69 - Step 04 - Understand AOP Terminology - Pointcut, Advice, Aspect and Join Point
+
+------------------------------------------------------------------------------
+70 - Step 05 - Using @After, @AfterReturning, @AfterThrowing Advices
+
+------------------------------------------------------------------------------
+71 - Step 06 - Using @Around advice to implement performance tracing
+
+------------------------------------------------------------------------------
+72 - Step 07 - Best Practice: Use common Pointcut Configuration
+
+------------------------------------------------------------------------------
+73 - Step 08 - Quick summary of other Pointcuts
+
+------------------------------------------------------------------------------
+74 - Step 09 - Creating custom Annotation and an Aspect for Tracking Time
+
+------------------------------------------------------------------------------
+SECTION 10 - SPRING LEVEL 6 - INTERACTING WITH DATABASES - SPRING JPA, JDBC AND SPRING DATA
+------------------------------------------------------------------------------
+75 - Section Introduction - Spring JDBC, JPA and Spring Data
+
+------------------------------------------------------------------------------
+76 - Step 01 - Setting up a project with JDBC, JPA, H2 and Web Dependencies
+
+------------------------------------------------------------------------------
+77 - Step 02 - Launching up H2 Console
+
+------------------------------------------------------------------------------
+78 - Step 03 - Creating a Database Table in H2 
+
+------------------------------------------------------------------------------
+79 - Step 04 - Populate data into Person Table
+
+------------------------------------------------------------------------------
+80 - Step 05 - Implement findAll persons Spring JDBC Query Method
+
+------------------------------------------------------------------------------
+81 - Step 06 - Execute the findAll method using CommandLineRunner
+
+------------------------------------------------------------------------------
+82 - Step 07 - A Quick Review - JDBC vs Spring JDBC
+
+------------------------------------------------------------------------------
+83 - Step 08 - Whats in the background? Understanding Spring Boot Autoconfiguration
+
+------------------------------------------------------------------------------
+84 - Step 09 - Implementing findById Spring JDBC Query Method
+
+------------------------------------------------------------------------------
+85 - Step 10 - Implementing deleteById Spring JDBC Update Method
+
+------------------------------------------------------------------------------
+86 - Step 11 - Implementing insert and update Spring JDBC Update Methods
+
+------------------------------------------------------------------------------
+87 - Step 12 - Creating a custom Spring JDBC RowMapper
+
+------------------------------------------------------------------------------
+88 - Step 13 - Quick Introduction to JPA
+
+------------------------------------------------------------------------------
+89 - Step 14 - Defining Person Entity
+
+------------------------------------------------------------------------------
+90 - Step 15 - Implementing findById JPA Repository Method
+
+------------------------------------------------------------------------------
+91 - Step 16 - Implementing insert and update JPA Repository Methods
+
+------------------------------------------------------------------------------
+92 - Step 17 - Implementing deleteById JPA Repository Method
+
+-----------------------------------------------------------------------------
+93 - Step 18 - Implementing findAll using JPQL Named Query
+
+------------------------------------------------------------------------------
+94 - Step 19 - Introduction to Spring Data JPA
+
+------------------------------------------------------------------------------
+95 - Step 20 - Connecting to Other Databases
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

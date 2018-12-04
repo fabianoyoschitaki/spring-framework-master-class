@@ -444,7 +444,7 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - MOCKITO IN 5 STEPS
 	
 	Then create a test method:
 	
-	public class SomeBusinessTest {
+	public class SomeBusinessStubTest {
 
 		@Test
 		public void testFindTheGreatestAllData() {
@@ -479,6 +479,43 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - MOCKITO IN 5 STEPS
 
 ------------------------------------------------------------------------------
 45 - Step 3: Your first mock with Mockito
+	Now let's replace the Stub and create another test class: SomeBusinessMockTest.
+	
+	import org.junit.Test;
+	import static org.mockito.Mockito.mock;
+	import static org.mockito.Mockito.when;
+
+	public class SomeBusinessMockTest {
+
+		@Test
+		public void testFindTheGreatestAllData() {
+			DataService dataServiceMock = mock(DataService.class);
+			
+			//what we want
+			//dataServiceMock.retrieveAllData() => new int[] {24, 15, 3}
+			// so, when this method we called, then return new int[] {24, 15, 3}
+			when(dataServiceMock.retrieveAllData()).thenReturn(new int[] {24, 15, 3});
+			
+			SomeBusinessImpl businessImpl = new SomeBusinessImpl(dataServiceMock);
+			int result = businessImpl.findTheGreatestFromAllData();
+			assertEquals(24, result);
+		}
+	}
+	
+	The great thing about mocking is that it's so simple. And we can repeat data, like this other method:
+	
+	@Test
+	public void testFindTheGreatestAllData_ForOneValue() {
+		DataService dataServiceMock = mock(DataService.class);
+		when(dataServiceMock.retrieveAllData()).thenReturn(new int[] {15});
+		SomeBusinessImpl businessImpl = new SomeBusinessImpl(dataServiceMock);
+		int result = businessImpl.findTheGreatestFromAllData();
+		assertEquals(15, result);
+	}
+	
+	You can create mock for classes as well. When using mocks, there are things that you need to be careful about:
+	1. How do you send the mock out to the class you want to test. (like in : SomeBusinessImpl(DataService dataService), constructor injection). 
+	So we're passing mock by constructor. Conceptually this is very similar to Spring.
 
 ------------------------------------------------------------------------------
 46 - Step 4: Using Mockito Annotations - @Mock, @InjectMocks, @RunWith

@@ -399,10 +399,83 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - MOCKITO IN 5 STEPS
 
 ------------------------------------------------------------------------------
 43 - Step 1: Setting an example using http://start.spring.io
+	Generate a Maven Project with JAva and Spring Boot 2.1.1
+		Group: com.fabiano.mockito
+		Artifact: mockito-in-5-steps
+		
+	Create SomeBusinessImpl.java and interface DataService.
+	Now we want to be able to create a unit test: we're going to write a stub.
 	
+	//SomeBusinessImpl is dependent on DataService.
+	public class SomeBusinessImpl {
+		private DataService dataService;
+		
+		public SomeBusinessImpl(DataService dataService) {
+			super();
+			this.dataService = dataService;
+		}
+
+		int findTheGreatestFromAllData() {
+			int[] data = dataService.retrieveAllData();
+			int greatest = Integer.MIN_VALUE;
+			for (int value : data) {
+				if (value > greatest) {
+					greatest = value;
+				}
+			}
+			return greatest;
+		}
+	}
+	
+	-------
+	package com.fabiano.mockito.mockitoin5steps;
+
+	public interface DataService {
+		int[] retrieveAllData();
+	}
+
 
 ------------------------------------------------------------------------------
 44 - Step 2: Using a Stubs - Disadvantages
+	Create new JUnit 4 test case. 
+	Class under Test, select SomeBusinessImpl. 
+	Class name: SomeBusinessTest
+	Finish.
+	
+	Then create a test method:
+	
+	public class SomeBusinessTest {
+
+		@Test
+		public void testFindTheGreatestAllData() {
+			SomeBusinessImpl businessImpl = new SomeBusinessImpl(new DataServiceStub());
+			int result = businessImpl.findTheGreatestFromAllData();
+			assertEquals(24, result);
+		}
+
+	}
+
+	class DataServiceStub implements DataService {
+		@Override
+		public int[] retrieveAllData() {
+			return new int [] {24, 6, 15};
+		}
+		
+	}
+
+	It works fine. But the drawback is that we're using a stub. What's the problem with it?
+	1. Have to write lots of code to maintain that. 
+		class DataServiceStub implements DataService {
+			@Override
+			public int[] retrieveAllData() {
+				return new int [] {24, 6, 15};
+			}
+		}
+	
+	2. If you want to create different scenarios (like new int[] {} empty), you have to create multiple stub versions.
+	
+	That's when mocks come in. They make very easy to dynamically create different classes and make them return data that we would want to return.
+	
 
 ------------------------------------------------------------------------------
 45 - Step 3: Your first mock with Mockito

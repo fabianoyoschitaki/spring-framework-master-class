@@ -519,9 +519,77 @@ SECTION 6 - BASIC TOOLS AND FRAMEWORKS - MOCKITO IN 5 STEPS
 
 ------------------------------------------------------------------------------
 46 - Step 4: Using Mockito Annotations - @Mock, @InjectMocks, @RunWith
+	
+	//When using Mockito annotations, then we would need to use a runWith
+	@RunWith(MockitoJUnitRunner.class)
+	public class SomeBusinessMockAnnotationTest {
+
+		@Mock
+		DataService dataServiceMock;
+		
+		@InjectMocks
+		SomeBusinessImpl businessImpl;
+		
+		@Test
+		public void testFindTheGreatestFromAllData() {
+			when(dataServiceMock.retrieveAllData()).thenReturn(new int[] {24, 15, 3});
+			assertEquals(24, businessImpl.findTheGreatestFromAllData());
+		}
+
+		@Test
+		public void testFindTheGreatestFromAllData_ForOneValue() {
+			when(dataServiceMock.retrieveAllData()).thenReturn(new int[] {15});
+			assertEquals(15, businessImpl.findTheGreatestFromAllData());
+		}
+		
+		@Test
+		public void testFindTheGreatestFromAllData_NoValues() {
+			when(dataServiceMock.retrieveAllData()).thenReturn(new int[] {});
+			assertEquals(Integer.MIN_VALUE, businessImpl.findTheGreatestFromAllData());
+		}
+	}	
 
 ------------------------------------------------------------------------------
 42 - Step 5: Mocking List Interface
+
+	public class ListTest {
+		@Test
+		public void testSize() {
+			List listMock = mock(List.class);
+			//how to mock list size?
+			when(listMock.size()).thenReturn(10);
+			assertEquals(10, listMock.size());
+			//return the same 10, because there's a single return
+			assertEquals(10, listMock.size());
+		}
+		
+		@Test
+		public void testSize_multipleReturns() {
+			List listMock = mock(List.class);
+			//how to mock list size for multiple asserts?
+			when(listMock.size()).thenReturn(10).thenReturn(20);
+			assertEquals(10, listMock.size());
+			assertEquals(20, listMock.size());
+			//return the last value (20)
+			assertEquals(20, listMock.size());
+		}
+		
+		@Test
+		public void testGet_SpecificParameter() {
+			List listMock = mock(List.class);
+			when(listMock.get(0)).thenReturn("SomeString");
+			assertEquals("SomeString", listMock.get(0));
+			assertEquals(null, listMock.get(1));
+		}
+		
+		@Test
+		public void testGet_GenericParameter() {
+			List listMock = mock(List.class);
+			when(listMock.get(Mockito.anyInt())).thenReturn("SomeString");
+			assertEquals("SomeString", listMock.get(0));
+			assertEquals("SomeString", listMock.get(1));
+		}
+	}
 
 ------------------------------------------------------------------------------
 SECTION 7 - SPRING LEVEL 3 - UNIT TESTING WITH SPRING FRAMEWORK

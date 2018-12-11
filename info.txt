@@ -629,10 +629,54 @@ SECTION 7 - SPRING LEVEL 3 - UNIT TESTING WITH SPRING FRAMEWORK
 		
 		
 	Write a test for BinarySearchImpl: new JUnit Test Case com.fabiano.spring.basics.springin5steps.basic.BinarySearchTest.java
+	
+	//Load the context
+	@RunWith(SpringRunner.class)
+	@ContextConfiguration(classes=SpringIn5StepsBasicApplication.class)
+	public class BinarySearchTest {
+		
+		//Get this bean from the context
+		@Autowired
+		BinarySearchImpl binarySearch;
+
+		@Test
+		public void testBasicScenario() {
+			//Call method on binarySearch
+			int actualResult = binarySearch.binarySearch(new int[] {}, 5);
+			//Check if the value is correct
+			assertEquals(3, actualResult);
+		}
+
+	}
 
 ------------------------------------------------------------------------------
 50 - Step 28: Spring Unit Testing with an XML Context
-
+	BinarySearchXMLConfigurationTest.java
+	
+	The difference is this:
+		@ContextConfiguration(locations="/applicationContext.xml")
+		public class BinarySearchXMLConfigurationTest {
+			...
+		}
+	
+	You can also create a testContext.xml based on applicationContext.xml and add it to src/test/resources:
+		<?xml version="1.0" encoding="UTF-8"?>
+		<beans xmlns="http://www.springframework.org/schema/beans"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:context="http://www.springframework.org/schema/context"
+			xsi:schemaLocation="http://www.springframework.org/schema/beans
+							   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+							   http://www.springframework.org/schema/context
+							   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+			<import resource="classpath:applicationContext.xml"/>
+		</beans>
+		
+	//@ContextConfiguration(locations="/applicationContext.xml")
+	@ContextConfiguration(locations="/testContext.xml") //specific for testing is also an option
+	public class BinarySearchXMLConfigurationTest {
+		...
+	}
+	
 ------------------------------------------------------------------------------
 51 - Step 29: Spring Unit Testing with Mockito
 

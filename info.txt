@@ -600,6 +600,35 @@ SECTION 7 - SPRING LEVEL 3 - UNIT TESTING WITH SPRING FRAMEWORK
 	
 ------------------------------------------------------------------------------
 49 - Step 27: Spring Unit Testing with a Java Context
+	Change 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		TO 
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		comment @SpringBootTest in SpringIn5StepsBasicApplicationTests
+		
+		
+	Write a test for BinarySearchImpl: new JUnit Test Case com.fabiano.spring.basics.springin5steps.basic.BinarySearchTest.java
 
 ------------------------------------------------------------------------------
 50 - Step 28: Spring Unit Testing with an XML Context

@@ -679,6 +679,85 @@ SECTION 7 - SPRING LEVEL 3 - UNIT TESTING WITH SPRING FRAMEWORK
 	
 ------------------------------------------------------------------------------
 51 - Step 29: Spring Unit Testing with Mockito
+	Created method getData in SomeCdiDao
+	public int[] getData() {
+		return new int[] {5, 89, 100};
+	}
+	
+	Created method findGreatest in SomeCdiBusiness:
+	public int findGreatest() {
+		int greatest = Integer.MIN_VALUE;
+		int[] data = someCdiDao.getData();
+		for (int value : data) {
+			if (value > greatest)
+				greatest = value;
+		}
+		return greatest;
+	}
+	
+	Then create SomeCdiBusinessTest:
+	
+	@RunWith(SpringRunner.class)
+	@ContextConfiguration(classes=SpringIn5StepsBasicApplication.class)
+	public class SomeCdiBusinessTest {
+		
+		//Get this bean from the context
+		@Autowired
+		SomeCdiBusiness business;
+	 
+		@Test
+		public void testBasicScenario() {
+			//Call method on binarySearch
+			int actualResult = business.findGreatest();
+			//Check if the value is correct
+			assertEquals(100, actualResult);
+		}
+
+	}
+	
+	This is bad because we're depending on the Data Layer (what if data layer is down, someone changes the value etc). 
+	That's where Mockito enters. Let's change:
+	
+	@RunWith(MockitoJUnitRunner.class)
+	public class SomeCdiBusinessTest {
+		
+		//Inject Mock
+		@InjectMocks
+		SomeCdiBusiness business;
+		
+		//Create Mock
+		@Mock
+		SomeCdiDao daoMock;
+	 
+		@Test
+		public void testBasicScenario() {
+			
+			//when daoMock.getData method is called return int[]{2,4};
+			Mockito.when(daoMock.getData()).thenReturn(new int[] {2,4});
+			
+			//Call method on binarySearch
+			int actualResult = business.findGreatest();
+			
+			//Check if the value is correct
+			assertEquals(4, actualResult);
+		}
+		
+		@Test
+		public void testBasicScenario2() {
+			Mockito.when(daoMock.getData()).thenReturn(new int[] {});
+			int actualResult = business.findGreatest();
+			assertEquals(Integer.MIN_VALUE, actualResult);
+		}
+		
+		@Test
+		public void testBasicScenario3() {
+			Mockito.when(daoMock.getData()).thenReturn(new int[] {2,2});
+			int actualResult = business.findGreatest();
+			assertEquals(2, actualResult);
+		}
+
+	}
+	
 
 ------------------------------------------------------------------------------
 SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps

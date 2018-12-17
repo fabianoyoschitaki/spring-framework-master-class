@@ -1108,7 +1108,23 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 
 ------------------------------------------------------------------------------
 61 - Step 9: Spring Boot Actuator
-
+	Let's add the dependency for actuator in the pom.xml:
+	
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-actuator</artifactId>
+	</dependency>
+	
+	it brings a lot of monitoring around your application. So in actuator, you'll be able to read a lot of data about the application. 
+	For example, to see what are the beans that are configured, you want to see how many a specific service was called, failed etc
+	
+	Also add:
+	
+	<dependency>
+		<groupId>org.springframework.data</groupId>
+		<artifactId>spring-data-rest-hal-browser</artifactId>
+	</dependency>
+		
 ------------------------------------------------------------------------------
 62 - Step 9: Spring Boot Developer Tools
 

@@ -808,9 +808,46 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 		
 -----------------------------------------------------------------------------
 54 - Step 2: Developing Spring Applications before Spring Boot
-
+	We'll look at one of the projects which we developed in our Spring MVC course. Before we start with any project, we need to decide what frameworks and dependencies
+	to use.  This was a web project, so we would want to use Spring MVC and things like that. So we needed to make decisions on what frameworks and what versions of them to use.
+	
+	<depencency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>4.2.2-RELEASE</version>
+	</dependency>
+	<depencency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-web</artifactId>
+		<version>4.0.1-RELEASE</version>
+	</dependency>
+	<depencency>
+		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-config</artifactId>
+		<version>4.0.1-RELEASE</version>
+	</dependency>
+	<depencency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-databind</artifactId>
+		<version>2.5.3</version>
+	</dependency>
+	
+	I would want to use jackson databind because I want to do some binding and validation. I'd would want to use JSTL and Hibernate validator and also 
+	for logging log4j.
+	
+	Sometimes, the versions are not compatible. Deciding the frameworks, which version to use is a major decision that we needed to make when we were
+	not using Spring Boot. We needed to implement Default Exception Handling and a complete Spring Configuration file. 
+	
+	All of this would be replaced by Spring Boot starter web in combination with Spring Boot starter security.
+	
 ------------------------------------------------------------------------------
 55 - Step 3: Using Spring Initializr to create a Spring Boot Application
+	In this step we'll create a simple Spring Boot project and look at all the magic a simple starter project can provide.
+	Go to start.spring.io > Maven Project | Java | Spring Boot 2.0.0 | com.fabiano.springboot.basics | springboot-in-10-steps
+	
+	We'd want to develop simple REST service and to be able to do that, we need "Web" Starter
+	
+	Generate Project. 
 
 ------------------------------------------------------------------------------
 56 - Step 4: Creating a Simple REST Controller

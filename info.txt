@@ -1038,6 +1038,33 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 		Also, starters for logging. 
 ------------------------------------------------------------------------------
 59 - Step 7: Spring Boot Starter Projects - Starter Web and Starter JPA
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-web</artifactId>
+	</dependency>
+	
+	You can open the pom.xml of it and see the dependencies.
+	
+	is the preferred starter for Spring Boot to develop web applications as well as RESTful Webservices. 
+	How do our List<Book> turned into JSON? Because of the JSON starter. Basically when you look at all starter projects, they have a set of dependencies that are
+	already defined. And these dependencies are automatically provided to your project. 
+	
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope>
+	</dependency>
+	
+	This enables you to write unit test and integration tests as well. It has for instance Mockito, which is the default mocking framework that comes along Spring Boot. 
+	A combination of AssertJ and Hamcrest are awesome to write great matches. 
+	
+	Another starter is JPA, which is kind of the interface for Hibernate, JPA defines how ORM applications or ORM frameworks should work. ORM is object relational mappoing.
+	Let's add to the pom.xml 
+	
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-jpa</artifactId>
+	</dependency>
 
 ------------------------------------------------------------------------------
 60 - Step 8: Overview of different Spring Boot Starter Projects

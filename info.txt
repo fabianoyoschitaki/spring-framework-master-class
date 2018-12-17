@@ -974,6 +974,9 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 	
 ------------------------------------------------------------------------------
 58 - Step 6: Spring Boot vs Spring vs Spring MVC
+
+	(http://www.springboottutorial.com/spring-boot-vs-spring-mvc-vs-spring)
+	
 	Let's clearly separate the differences between Spring, Spring MVC and Spring Boot. 
 	They are not competing for the same place, they have different roles, they solve different problems. 
 	
@@ -1017,9 +1020,22 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 		The other thing which Spring framework solves is providing good integration with other frameworks. 
 		Like with Hibernate ORM, iBatis for Object Mapping, good integration with JUnit and Mockito as well. 
 		
-	SPRING MVC: it is concerned with developing web applications.  
+	SPRING MVC: it is concerned with developing web applications. It provides a simple way of developing web applications. One of the great things about 
+		Spring MVC is the separation of concerns. 
+		- Dispatcher servlet is concerned with just the basic front controller part.
+		- ModelAndView
+		- ViewResolver is concerned with resolving a view name to the physical view. 
+		
+		With these kind of concepts, Spring MVC makes it very easy to develop your web applications as well as your RESTful services. 
+		Whether you're developing web applications or REST services with Spring Boot, internally you're using Spring MVC framework (that's the Spring web MVC framework)
+		
+	SPRING BOOT: we are configuring lots of things (view resolver, dispatcher servlet, datasource, entity manager and transaction manager) Spring Boot
+		says, "why do you need to do all this configuration?" It thinks like: I found a Spring MVC jar, so can I configure some of the beans automatically? Can I configure
+		a dispatcher servlet automatically? a View Resolver? A Data Source? This is what Spring Boot does, the AUTO CONFIGURATION by looking at frameworks which are 
+		available on the classpath and provide automatic configuration. The starter projects are all built around well known patterns.
 
-
+		Other than starters, the important goals of SB is to provide a few monitoring features. So it also provide starters like Spring Boot starter actuator which is used for monitoring. 
+		Also, starters for logging. 
 ------------------------------------------------------------------------------
 59 - Step 7: Spring Boot Starter Projects - Starter Web and Starter JPA
 

@@ -1068,6 +1068,43 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 
 ------------------------------------------------------------------------------
 60 - Step 8: Overview of different Spring Boot Starter Projects
+	http://www.springboottutorial.com/spring-boot-vs-spring-mvc-vs-spring
+	https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#using-boot-starter
+	
+	We looked at 3 starter projects: starter-test, starter-web and starter-data-jpa, Let's see other:
+	
+	1. spring-boot-starter-web-services - SOAP Web Services 
+		there are basically SOAP and REST, but SOAP can also fit into the bracket of REST web services. So, if you want to define WSDL and then implement your 
+		web service, that's a SOAP webservice and you can use this starter.
+	2. spring-boot-starter-web - Web & RESTful applications
+	3. spring-boot-starter-test - Unit testing and Integration Testing
+		really makes it easy to write great unit and integration tests. 
+	4. spring-boot-starter-jdbc - Traditional JDBC
+	5. spring-boot-starter-hateoas - Add HATEOAS features to your services
+		if you're writing RESTful web services and you would want to add HATEOAS features
+	6. spring-boot-starter-security - Authentication and Authorization using Spring Security
+		all web applications and all RESTful web services should be secure. This starter uses Spring Security. You can implement both authentication and authorization 
+		and Spring Boot Starter Security has support for basic authentication as well as OAuth authentication. It also has support for OAuth2 authentication.
+	7. spring-boot-starter-data-jpa - Spring Data JPA with Hibernate
+		by default it uses Hibernate as the ORM framework.
+	8. spring-boot-starter-cache - Enabling Spring Framework’s caching support
+		it has support for a wide range of caching options including distributed caches like Hazelcast.
+	9. spring-boot-starter-data-rest - Expose Simple REST Services using Spring Data REST
+		if you're using spring-boot-starter-data-jpa and you would want to expose your entities as RESTful services, then you can use this.
+		They expose all the typical request methods like GET, POST, PUT and DELETE. 
+		
+	The other starters of Spring Boot are more technical:
+	
+	10. spring-boot-starter-actuator - To use advanced features like monitoring & tracing to your application out of the box
+	11. spring-boot-starter-undertow, spring-boot-starter-jetty, spring-boot-starter-tomcat - To pick your specific choice of Embedded Servlet Container
+	12. spring-boot-starter-logging - For Logging using logback
+	14. spring-boot-starter-log4j2 - Logging using Log4j2
+		
+	Spring Boot aims to enable production ready applications in quick time.
+
+	Actuator : Enables Advanced Monitoring and Tracing of applications.
+	Embedded Server Integrations - Since server is integrated into the application, I would NOT need to have a separate application server installed on the server.
+	Default Error Handling
 
 ------------------------------------------------------------------------------
 61 - Step 9: Spring Boot Actuator

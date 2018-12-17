@@ -915,7 +915,63 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 	[{"id":1,"name":"Mastering Spring 5.0","author":"Ranga Karanam"}]
 ------------------------------------------------------------------------------
 57 - Step 5: What is Spring Boot Auto Configuration?
+	We'll understand what is Auto Configuration. How did all the things that are needed for the REST service to be up and running get configured automatically?
+	
+	package com.fabiano.springboot.basics.springbootin10steps;
 
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+	@SpringBootApplication
+	public class SpringbootIn10StepsApplication {
+		public static void main(String[] args) {
+			SpringApplication.run(SpringbootIn10StepsApplication.class, args);
+		}
+	}
+	
+	There are 3 things that are essentially done by at Spring Boot Application: 
+		Number 1: The annotation @SpringBootApplication indicates that this is a Spring Context file. 
+		Number 2: It indicates something called Auto Configuration.
+		Number 3: It enables something called Component Scan - one of the important features of Spring where it would start automatically scanning these classes 
+			in this package (com.fabiano.springboot.basics.springbootin10steps) and this subpackage for any beans. So when we added @RestController, this is one annotation
+			scanned for it, so this would be registered as a COMPONENT, so BooksController would be registered as a bean and it would be managed by the Spring Framework.
+		
+	SpringApplication.run(SpringbootIn10StepsApplication.class, args) is used to run a Spring Context. SpringbootIn10StepsApplication is the argument. 
+	It returns a application Context:
+	
+	@SpringBootApplication
+	public class SpringbootIn10StepsApplication {
+		public static void main(String[] args) {
+			ApplicationContext applicationContext = 
+				SpringApplication.run(SpringbootIn10StepsApplication.class, args);
+			for (String name : applicationContext.getBeanDefinitionNames()) {
+				System.out.println("Bean Definition Name: " + name);
+			}
+		}
+	}
+	
+	It will print a lot of beans. How are these beans configured? That's basically the feature called auto configuration. 
+	What Spring boot does is something called Spring Boot autoconfigure jar. (DispatchServletAutoConfiguration.class) These autoconfiguration
+	classes are what are creating these beans. 
+	What would happen at startup is the Spring Boot Framework would trigger the autoconfiguration jar and it would loop though classes which are on the classpath.
+	It would see that I have a Spring web MVC framework on the classpath. 
+	What does this Spring Boot auto configure do? 
+		It says "Oh there is Spring web MVC on the classpath, then I would need to configure a dispatcher servlet.", ""
+		"Oh there is Spring MVC on the classpath, then I would need to configure a view resolver" So all these things happen and you'd be able to see the beans which are created here. 
+		
+	How does autoconfiguration work?
+		Spring Boot basically look at 2 things:
+			1. Frameworks available on the classpath. There a site called springboottutorial.com where we have a lot of articles on Spring Boot. 
+			2. Existing configuration for the application. Bases on that, it provides the configuration needed.
+			
+	So for example, if you're using a web starter, the basic things that you would need would be a dispatcher servlet, some internationalization, you need some messaging. 
+	All that kind of stuff would get autoconfigured for you. If you want to see more of what happens with auto configuration, put logging level to DEBUG:
+		application.properties -> logging.level.org.springframework: DEBUG 
+		it will say all the stuff which was auto configured and which wasn't autoconfigured. 
+	
+	Auto Configuration is a very important concept regarding Spring Boot. one of the most important things to understand is you were still a beginner with Spring Boot and 
+	auto configuration is something which will grow on you as you keep building more and more SB application. 
+	
 ------------------------------------------------------------------------------
 58 - Step 6: Spring Boot vs Spring vs Spring MVC
 

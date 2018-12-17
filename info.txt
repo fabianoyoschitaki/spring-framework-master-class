@@ -974,6 +974,51 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 	
 ------------------------------------------------------------------------------
 58 - Step 6: Spring Boot vs Spring vs Spring MVC
+	Let's clearly separate the differences between Spring, Spring MVC and Spring Boot. 
+	They are not competing for the same place, they have different roles, they solve different problems. 
+	
+	SPRING FRAMEWORK: What's the core problem that Spring framework solves?
+		A: testability. The most important feature is Dependency Injection, the core of the Spring framework is the IOC - inversion of control. 
+		Spring framework takes control of all the beans and their dependencies. That's basically what the Spring frmework cares about. It is all about defining your beans, 
+		putting your @Component, @Service and things like that and also defining your dependencies @Autowired and also defining how to find your beans (ComponentScan for example).
+		Spring framework solves the problem of DEPENDENCY INJECTION. It helps you build loosely coupled applications which can be easily unit tested
+		
+		If you look at this example:
+		
+		@RestController
+		public class WelcomeController {
+			private WelcomeService service = new WelcomeService();
+			@RequestMapping("/welcome")
+			public String welcome(){
+				return service.retrieveWelcomeMessage();
+			}			
+		}
+		
+		the WelcomeService is directly created in here. This is tightly coupled. The WelcomeController is now tightly coupled to the WelcomeService.
+		If you do DI properly, then you'd autowire it in:
+		
+		@RestController
+		public class WelcomeController {
+			@Autowired
+			private WelcomeService service;
+			@RequestMapping("/welcome")
+			public String welcome(){
+				return service.retrieveWelcomeMessage();
+			}			
+		}
+		
+		You can use frameworks like Mockito and Mock Spring MVC to replace this service with a mock and unit  test this controller. 
+		That's the main problem that Spring framework solves.
+		
+		Other than that, Spring framework also solves a few other problems like duplication and that's basically plumbing code. 
+		So if, let's say you're using JDBC, then you needed to write a lot of boilerplate code. Try, catch, exception etc. 
+		That is not needed when you use any of the things that are based on the Spring framework (Spring JDBC, Spring Data or Spring JMS)
+		
+		The other thing which Spring framework solves is providing good integration with other frameworks. 
+		Like with Hibernate ORM, iBatis for Object Mapping, good integration with JUnit and Mockito as well. 
+		
+	SPRING MVC: it is concerned with developing web applications.  
+
 
 ------------------------------------------------------------------------------
 59 - Step 7: Spring Boot Starter Projects - Starter Web and Starter JPA

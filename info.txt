@@ -847,11 +847,72 @@ SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 	
 	We'd want to develop simple REST service and to be able to do that, we need "Web" Starter
 	
-	Generate Project. 
+	Generate Project, import to eclipse as maven project and the dependencies will start to download.
 
 ------------------------------------------------------------------------------
 56 - Step 4: Creating a Simple REST Controller
+	Let's create a service http://localhost:8080/books => few hardcoded books.
+	
+	Let's create a simple Bean named Book. 
+		package com.fabiano.springboot.basics.springbootin10steps;
+		public class Book {
+			long id;
+			String name;
+			String author;
+			
+			public Book(long id, String name, String author) {
+				super();
+				this.id = id;
+				this.name = name;
+				this.author = author;
+			}
+			public long getId() {
+				return id;
+			}
+			public void setId(long id) {
+				this.id = id;
+			}
+			public String getName() {
+				return name;
+			}
+			public void setName(String name) {
+				this.name = name;
+			}
+			public String getAuthor() {
+				return author;
+			}
+			public void setAuthor(String author) {
+				this.author = author;
+			}
+			
+			@Override
+			public String toString() {
+				return "Book [id=" + id + ", name=" + name + ", author=" + author + "]";
+			}
+		}
 
+	Then BooksController:
+	
+	package com.fabiano.springboot.basics.springbootin10steps;
+
+	import java.util.Arrays;
+	import java.util.List;
+
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.RestController;
+
+	@RestController
+	public class BooksController {
+		
+		@GetMapping("/books")
+		public List<Book> getAllBooks(){
+			return Arrays.asList(
+				new Book(1l, "Mastering Spring 5.0", "Ranga Karanam"));
+		}
+	}
+
+	Start the server: Run SpringbootIn10StepsApplication.java and go to http://localhost:8080/books:
+	[{"id":1,"name":"Mastering Spring 5.0","author":"Ranga Karanam"}]
 ------------------------------------------------------------------------------
 57 - Step 5: What is Spring Boot Auto Configuration?
 

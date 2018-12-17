@@ -758,16 +758,55 @@ SECTION 7 - SPRING LEVEL 3 - UNIT TESTING WITH SPRING FRAMEWORK
 
 	}
 	
-
 ------------------------------------------------------------------------------
 SECTION 8 - SPRING LEVEL 4 - Spring Boot in 10 Steps
 ------------------------------------------------------------------------------
 52 - Introduction Section - Spring Boot in 10 Steps
+	Understand how things were done before Spring Boot. All the code can be found at: 
+	https://github.com/in28minutes/spring-master-class/tree/master/00-framework-tool-introductions/05.Spring-Boot-Introduction-In-10-Steps
 
 ------------------------------------------------------------------------------
 53 - Step 1: Introduction to Spring Boot - Goals and Important Features
-
-------------------------------------------------------------------------------
+	Building 25, 50 micro services instead of 1 big monolithic applications. It has quickly become the number one framework to develop 
+	micro services in the Java world.
+	
+	Goals: 
+		Enable building production ready applications quickly
+		Provide common non-functional features
+		- embedded servers
+		- metrics
+		- health checks
+		- externalized configuration
+	
+	What Spring Boot is NOT!
+		ZERO code generation
+		Neither an application server nor a web server
+		
+	Features
+		Quick Starter Projects with Auto Configuration 
+		
+		- WEB
+			For example, developing a web application, would need: Spring MVC, Spring Core, some validation framework, logging framework, 
+			in addition to that, I would need to configure all this stuff that is needed. Spring MVC: dispatcher Servlet, view resolvers.
+			However, with Spring Boot Starter Project, just add spring boot starter project and you'll get spring MVC, spring core, validation and also logging for free.
+				
+		- JPA
+			Similarly for JPA, spring starter called Spring Boot Starter JPA, once you use this starter, you would not only get JPA but also a default implementation of
+			JPA with hibernate and also auto configuration of that. You'd not worry about the framework part and you can directly start creating your entities. 
+		
+		- Embedded Servers - Tomcat, Jetty or Undertow
+			You can package your server, like Tomcat along with your application jar. So I can include the Tomcat server in my application jar. I don't need anything else but Java 
+			to run my jar in, say, a Linux box. This makes a huge difference in the micro services world. 
+		
+		Production-ready features
+			- Metrics, health checks 
+				It provides monitoring for your application through something called Spring Boot actuator. For example, you can find out how many times a particular service is called, failed
+				and check whether your application is up and running or not. All these features come BUILT IN. 
+		
+			- Externalized configuration
+				you can simply create property files matching a simple naming convention and that's it. Spring Boot also provides support for different profiles. 
+		
+-----------------------------------------------------------------------------
 54 - Step 2: Developing Spring Applications before Spring Boot
 
 ------------------------------------------------------------------------------

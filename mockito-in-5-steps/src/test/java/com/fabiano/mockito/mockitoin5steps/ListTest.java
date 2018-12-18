@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 public class ListTest {
 
 	@Test
-	public void testSize() {
+	public void testSize() { 
 		List listMock = mock(List.class);
 		//how to mock list size?
 		when(listMock.size()).thenReturn(10);
